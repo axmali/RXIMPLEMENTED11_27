@@ -32,7 +32,7 @@ public class getData {
 			Row row = Sh.getRow(i);	
 
 			for( int j =0; j < colNum; j++){
-				System.out.println("j:"+j);
+				//System.out.println("j:"+j);
 				String value = row.getCell(j).getStringCellValue();	
 				data[i][j] = value;	
 			}		

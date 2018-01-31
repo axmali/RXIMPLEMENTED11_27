@@ -1,5 +1,6 @@
 package com.test.Utils;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,15 +11,22 @@ public class Functions {
 
 	public static void clickElement(WebDriver driver, WebElement element) {
 		dynamicWait(driver, element);
-		element.click();
+		
+//		element.click();
+		JavascriptExecutor js=(JavascriptExecutor)driver;
+		js.executeScript("arguments[0].click();", element);
+		
 	}
 
 	public static void inputText(WebDriver driver, WebElement element, String text) {
 		dynamicWait(driver, element);
-		element.click();
+//		element.click();
 		element.clear();
 		if(!text.equalsIgnoreCase("NA"))
-			element.sendKeys(text);
+		{
+			element.sendKeys(text+Keys.TAB);
+		}
+		
 	}
 
 	public static void switchToFrame(WebDriver driver) {
@@ -43,6 +51,7 @@ public class Functions {
 	}
 
 	public static boolean isEmpty(WebElement element) {
+		System.out.println("attribute val:"+element.getAttribute("value"));
 		return element.getAttribute("value").isEmpty();
 	}
 
@@ -60,7 +69,7 @@ public class Functions {
 	}
 
 	public static void dynamicWait(WebDriver driver, WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, 20);
+		WebDriverWait wait = new WebDriverWait(driver, 15);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 	
@@ -70,6 +79,16 @@ public class Functions {
 	
 	public static void tabOut(WebElement element){
 		element.sendKeys(Keys.TAB);
+	}
+	
+	public static boolean isDisplayedMatch(WebElement element){
+		try{
+			return element.isDisplayed();
+		}
+		catch(Exception e){
+			return false;
+		}
+		
 	}
 	
 	

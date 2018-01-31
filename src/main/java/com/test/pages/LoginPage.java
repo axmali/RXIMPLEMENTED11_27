@@ -10,17 +10,17 @@ import com.test.Utils.Functions;
 public class LoginPage {
 	WebDriver driver;
 
-	@FindBy(id="txt_login_username")
-	private WebElement usernameInputBox;
+	@FindBy(id="txt_login_username") 
+	private WebElement usernameInputBox; 
 
 	@FindBy(id="txt_login_password")
-	private WebElement passwordInputBox;
+	private WebElement passwordInputBox; 
 
 	@FindBy(id="btn_login_submit")
-	private WebElement submitButton;
+	private WebElement submitButton;  
 	
 	@FindBy(id="btn_user_portal")
-	private WebElement userPortalButton;
+	private WebElement userPortalButton; 
 
 	public LoginPage(WebDriver driver){
 		PageFactory.initElements(driver, this);
