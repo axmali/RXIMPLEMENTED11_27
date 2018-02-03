@@ -433,6 +433,10 @@ public class BillEntryPage {
 	public void inputTextIntoTotalCharges(String TotalCharges){
 		numBoxList.get(0).clear();
 		numBoxList.get(0).sendKeys(TotalCharges);
+		if(!numBoxList.get(0).getAttribute("value").equals(TotalCharges)){
+			numBoxList.get(0).clear();
+			numBoxList.get(0).sendKeys(TotalCharges);
+		}
 		//Functions.inputText(driver, numBoxList.get(0), TotalCharges);
 	}
 

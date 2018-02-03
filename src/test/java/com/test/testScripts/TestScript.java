@@ -43,7 +43,7 @@ public class TestScript
 		loginPage = new LoginPage(driver);
 		billEntryPage = new BillEntryPage(driver);
 		driver.get(URL);
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.manage().window().maximize();	
 		//Reader Header data Excel tab
 		//		data = getData.readExcel("TestData3", "CMS");
@@ -53,14 +53,16 @@ public class TestScript
 
 	@AfterSuite
 	public void tearDown(){
+		try {Thread.sleep(4000);} catch (InterruptedException e) {	}
 		driver.quit();
 	}
 
+
 	static String type;
 	@Test
-	public void test1() throws IOException{
+	public void test1() throws IOException, InterruptedException{
 		navigateToUserPortal();
-		for(int rowCMS=1;rowCMS<=4;rowCMS++){
+		for(int rowCMS=4;rowCMS<=4;rowCMS++){
 			navigateToBillEntryMainPage();
 			fillValuesInBillEntryPage(rowCMS);
 			type = getData.valueFromHeader("CMS","Type",rowCMS);
@@ -77,13 +79,15 @@ public class TestScript
 			TotalChargesSum=0;
 			for(int line=0; line<lineItemsRowsForCMS.size();line++){
 				if(line!=0){
+					try {Thread.sleep(4000);} catch (InterruptedException e) {	}
 					billEntryPage.tabOutFromDiag(line-1);
 					try {Thread.sleep(10000);} catch (InterruptedException e) {	}
 				}
 				fillValuesInLineItemsPage(type,  lineItemsRowsForCMS.get(line), line);
 			}
 			try {Thread.sleep(10000);} catch (InterruptedException e) {	}
-			billEntryPage.inputTextIntoTotalCharges(String.valueOf(TotalChargesSum));
+			String tc=String.valueOf(TotalChargesSum);
+			billEntryPage.inputTextIntoTotalCharges(tc);
 			try {Thread.sleep(5000);} catch (InterruptedException e) {	}
 			billEntryPage.clickOnCheckSumButton();
 			try {Thread.sleep(5000);} catch (InterruptedException e) {	}
@@ -112,7 +116,7 @@ public class TestScript
 
 
 
-			//			waitTime();
+			//		waitTime();
 			//			GetLineItemDataCMS(); 
 			//			readLineItemCMSFrmExl(iter);
 			//			fillLineItemCMSValues();
@@ -121,7 +125,7 @@ public class TestScript
 	}
 
 
-	private void fillValuesInBillEntryPage(int rowData) throws IOException {
+	private void fillValuesInBillEntryPage(int rowData) throws IOException, InterruptedException {
 		try {Thread.sleep(3000);} catch (InterruptedException e) {	}
 		
 		String clientName=getData.valueFromHeader("CMS","clientName",rowData);
@@ -194,6 +198,7 @@ public class TestScript
 
 
 		billEntryPage.inputTextIntoBillNPI(billingNPI);
+		Thread.sleep(3000);
 		billEntryPage.inputTextIntoRenderNPI(renderNPI);
 		System.out.println("zip: "+zipCode);
 		billEntryPage.inputTextIntoLoczip(zipCode);
@@ -297,7 +302,7 @@ public class TestScript
 	}
 
 	static float TotalChargesSum=0.00f;
-	private void fillValuesInLineItemsPage(String valueFromHeader, int rowData, int position) throws IOException {
+	private void fillValuesInLineItemsPage(String valueFromHeader, int rowData, int position) throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
 		billEntryPage.inputTextIntoPOS(getData.valueFromHeader("LineitemCMS","POS",rowData), position);
 		billEntryPage.inputTextIntoTOS(getData.valueFromHeader("LineitemCMS","TOS",rowData), position);
@@ -310,8 +315,9 @@ public class TestScript
 			billEntryPage.tabOutFromReviewCd(position);
 			billEntryPage.tabOutFromReviewMd(position);
 			billEntryPage.inputTextIntoCMSDays(getData.valueFromHeader("LineitemCMS","Days",rowData), position);
+			//Thread.sleep(3000);
 			billEntryPage.inputTextIntoChrgs(getData.valueFromHeader("LineitemCMS","Charges",rowData), position);
-			billEntryPage.inputTextIntoDiag(getData.valueFromHeader("LineitemCMS","Diag",rowData), position);
+			//billEntryPage.inputTextIntoDiag(getData.valueFromHeader("LineitemCMS","Diag",rowData), position);
 			//billEntryPage.inputTextIntoTotalCharges(getData.valueFromHeader("LineitemCMS","TotalCharges",rowData));
 
 		}
@@ -323,7 +329,7 @@ public class TestScript
 			billEntryPage.tabOutFromReviewCd(position);
 			billEntryPage.inputTextIntoUB04Days(getData.valueFromHeader("LineitemCMS","Days",rowData), position);
 			billEntryPage.inputTextIntoChrgs(getData.valueFromHeader("LineitemCMS","Charges",rowData), position);
-			billEntryPage.inputTextIntoDiag(getData.valueFromHeader("LineitemCMS","Diag",rowData), position);
+			//billEntryPage.inputTextIntoDiag(getData.valueFromHeader("LineitemCMS","Diag",rowData), position);
 		}
 		else if(valueFromHeader.equalsIgnoreCase("RX")){
 			billEntryPage.inputTextIntoBillNDCCd(getData.valueFromHeader("LineitemCMS","Billed Code",rowData), position);
@@ -333,7 +339,7 @@ public class TestScript
 			//billEntryPage.inputTextIntoRevMd(getData.valueFromHeader("LineitemCMS","ReviewedMd",rowData));
 			billEntryPage.inputTextIntoRXDaysSupply(getData.valueFromHeader("LineitemCMS","Days",rowData),position);
 			billEntryPage.inputTextIntoChrgs(getData.valueFromHeader("LineitemCMS","Charges",rowData), position);
-			billEntryPage.inputTextIntoDiag(getData.valueFromHeader("LineitemCMS","Diag",rowData), position);
+			//billEntryPage.inputTextIntoDiag(getData.valueFromHeader("LineitemCMS","Diag",rowData), position);
 			//billEntryPage.inputTextIntoTotalCharges(getData.valueFromHeader("LineitemCMS","TotalCharges",rowData));
 
 		}
