@@ -3,6 +3,8 @@ package com.test.pages;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -131,6 +133,9 @@ public class BillEntryPage {
 	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Bill Type:']/../../../../../../../../../td[3]//input[contains(@id,'ItemSelectorText')]")
 	private WebElement billTypeInputBox;
 
+	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Bill Type:']/../../../../../../../../../td[3]//span[contains(@id,'deleteTextImage')]")
+	private WebElement billTypeDeleteIcon;
+	
 	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Specialty:']/../../../../../../../../../td[3]//input[contains(@id,'ItemSelectorText')]")
 	private WebElement specialtyeInputBox;
 
@@ -256,6 +261,19 @@ public class BillEntryPage {
 	public String getAttributeBillTypeText(){
 		return Functions.getAttribute(billTypeInputBox, "value");
 	}
+	
+	public void inputTextIntoeBillType(String billtype){
+		Functions.clickElement(driver, billTypeInputBox);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Functions.clickElement(driver, billTypeDeleteIcon);
+		Functions.inputText(driver, billTypeInputBox, billtype);
+		//Functions.tabOut(billTypeInputBox);
+	}
 
 	public String getAttributeSpecialtyText(){
 		return Functions.getAttribute(specialtyeInputBox, "value");
@@ -367,21 +385,11 @@ public class BillEntryPage {
 	//Line 1
 
 	public void inputTextIntoPOS(String POS, int position){
-		//POS 16 31 46 61
-		//TOS 2 17 32 47 62
-		// Billed Code 9 24 39 54 69 
-		//Billed Mod  10 25 40 55 70
-		//Reviewed Code 11 26 41 56 71
-		//Daig  13 28 43 58 73
-
-		//Numboxes
-		//Days 5 16 27 38 49 60
-		//Charges  6 17 28 39 50 61 
-		//Fee Schedule Discount   7 18 29 40 51 62
-		//Allowed  11 22 33 44 55 66
-
 		int locator=Functions.newLocator(2, position, 10);
 		Functions.inputText(driver, silverInputBoxes.get(locator), POS);
+	}
+	public void clickIntoPOS(){
+		Functions.clickElement(driver, silverInputBoxes.get(2));
 	}
 
 	public void inputTextIntoTOS(String TOS, int position){
@@ -420,9 +428,9 @@ public class BillEntryPage {
 	}
 
 
-	public void inputTextIntoCMSDays(String Days, int position){
+	public void inputTextIntoCMSDays(String CMSDays, int position){
 		int locator=Functions.newLocator(2, position, 9);
-		Functions.inputText(driver, numBoxList.get(locator), Days);
+		Functions.inputText(driver, numBoxList.get(locator), CMSDays);
 	}
 
 	public void inputTextIntoChrgs(String  Chrgs, int position){
@@ -431,15 +439,24 @@ public class BillEntryPage {
 	}
 
 	public void inputTextIntoTotalCharges(String TotalCharges){
-		numBoxList.get(0).clear();
-		numBoxList.get(0).sendKeys(TotalCharges);
-		if(!numBoxList.get(0).getAttribute("value").equals(TotalCharges)){
-			numBoxList.get(0).clear();
-			numBoxList.get(0).sendKeys(TotalCharges);
-		}
+		//numBoxList.get(0).clear();
+		JavascriptExecutor js=(JavascriptExecutor)driver;
+		js.executeScript("arguments[0].value=arguments[1];", numBoxList.get(0),TotalCharges);
+		//Functions.tabOut(numBoxList.get(0));
+		//numBoxList.get(0).clear();
+		//numBoxList.get(0).sendKeys(TotalCharges);
+		numBoxList.get(0).sendKeys(Keys.TAB);
+		//if(!numBoxList.get(0).getAttribute("value").equals(TotalCharges)){
+		//	numBoxList.get(0).clear();
+		//	numBoxList.get(0).sendKeys(TotalCharges);
+		//}
 		//Functions.inputText(driver, numBoxList.get(0), TotalCharges);
 	}
 
+	//public void tabOutFromTotalCharges(TotalCharges){
+	//	Functions.tabOut(numBoxList.get(0),TotalCharges);
+	//	}
+	
 	public void inputTextIntoDiag(String Diag, int position){
 		int locator=Functions.newLocator(10, position, 10);
 		Functions.inputText(driver, silverInputBoxes.get(locator), Diag);
@@ -714,6 +731,12 @@ public class BillEntryPage {
 	}
 
 	public String checkWhichIcon(String str) {
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(str.equals("BillTxnID")){
 			if(Functions.isDisplayedMatch(tickIconBillingTxID)){
 				return "valid";
