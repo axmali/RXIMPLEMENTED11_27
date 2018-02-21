@@ -26,6 +26,7 @@ public class Functions {
 		{
 			element.sendKeys(text+Keys.TAB);
 		}
+		//try {Thread.sleep(500);} catch (InterruptedException e) {	}
 		
 	}
 

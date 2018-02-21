@@ -34,8 +34,8 @@ public class BillEntryPage {
 	private List<WebElement> listUnderitemSelectorArrow;
 
 
-	@FindBy(xpath="//button[contains(@id,'SilverButton_') and text()='Next']")  ////button[contains(@id,'SilverButton_') and text()='Next']
-	private List<WebElement> nextButtonList;
+	@FindBy(xpath="//button[contains(@id,'SilverButton_') and text()='Next']/../../../section[not(contains(@style,'display: none;'))]")  ////button[contains(@id,'SilverButton_') and text()='Next']
+	private WebElement nextButtonList;
 
 	//Line Item page
 	@FindBy(xpath="//input[contains(@id,'numBox')]")
@@ -111,7 +111,16 @@ public class BillEntryPage {
 
 	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Pay Code:']/../../../../../../../../../td[3]//input[contains(@id,'ItemSelectorText')]")
 	private WebElement paycodeInputBox;
-
+	
+	
+	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Pay Code:']/../../../../../../../../../td[3]//span[contains(@class,'downarrow commondropdownArrow')]")
+	private WebElement paycodeDropDownArrow;
+	
+	@FindBy(xpath="//div[contains(@class,'viewPicker-list live-click-iphone-patch  Commonscroll itemListAt')]//ul/li[2]")
+	private WebElement itemsDropdownSecondOption;
+	
+	
+	
 	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Bill ID:']/../../../../../../../../../td[3]//input[contains(@id,'SilverTextBox')]")
 	private WebElement billIDInputBox;
 
@@ -157,13 +166,21 @@ public class BillEntryPage {
 	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Admission Type:']/../../../../../../../../../td//input[contains(@id,'ItemSelectorText')]")
 	private WebElement admissionTypeInputBox;
 
+	
 	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Admission Source:']/../../../../../../../../../td//input[contains(@id,'ItemSelectorText')]")
 	private WebElement admissionSrcInputBox;
+	
+	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Admission Type:']/../../../../../../../../../td//span[contains(@class,'downarrow commondropdownArrow')]")
+	private WebElement admissionTypeDropDownArrow;
 
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Discharge Hour:']/../../../../../../../../../td//input[contains(@id,'SilverTextBox')]")
+	
+	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Admission Source:']/../../../../../../../../../td//span[contains(@class,'downarrow commondropdownArrow')]")
+	private WebElement admissionSrcDropDownArrow;
+
+	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Discharge Hour:']/../../../../../../../../../td[8]//input[contains(@id,'SilverTextBox')]")
 	private WebElement dischargenHourInputBox;
 
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Discharge Status:']/../../../../../../../../../td//input[contains(@id,'SilverTextBox')]")
+	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Discharge Status:']/../../../../../../../../../td[13]//input[contains(@id,'SilverTextBox')]")
 	private WebElement dischargenStatusInputBox;
 
 	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Admitting Diagnosis:']/../../../../../../../../../td//input[contains(@id,'SilverTextBox')]")
@@ -172,10 +189,10 @@ public class BillEntryPage {
 	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td//input[@value='Principal Proc Codes:']/../../../../../../../../../td[8]//input[contains(@id,'SilverTextBox')]")
 	private WebElement principalProcCodesInputBox;
 
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Operating Prov NPI:']/../../../../../../../../../td//input[contains(@id,'SilverTextBox')]")
+	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Operating Prov NPI:']/../../../../../../../../../td[3]//input[contains(@id,'SilverTextBox')]")
 	private WebElement operatingProvNPIInputBox;
 
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='DRG:']/../../../../../../../../../td//input[contains(@id,'SilverTextBox')]")
+	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='DRG:']/../../../../../../../../../td[8]//input[contains(@id,'SilverTextBox')]")
 	private WebElement DRGInputBox;
 
 
@@ -222,6 +239,13 @@ public class BillEntryPage {
 	public void inputTextIntoPaycode(String paycode){
 		Functions.inputText(driver, paycodeInputBox, paycode);
 	}
+	
+	public void selectPaycode(){
+		Functions.clickElement(driver, paycodeDropDownArrow);
+		Functions.clickElement(driver,itemsDropdownSecondOption);
+		
+	}
+	
 
 
 	public boolean isEmptyBillID(){
@@ -283,9 +307,9 @@ public class BillEntryPage {
 		Functions.inputText(driver, dateInputBoxes.get(1), DOSFrm);
 	}
 
-	//public void inputTextIntoDOSTO(String DOSTO){    //IF UB-04
-	//	Functions.inputText(dateInputBoxes.get(2), DOSTO);
-	//}
+	public void inputTextIntoDOSTO(String DOSTO){    
+	Functions.inputText(driver,dateInputBoxes.get(2), DOSTO);
+	}
 
 
 
@@ -335,9 +359,19 @@ public class BillEntryPage {
 	public void inputTextIntoAdmissionType(String AdmissionType){
 		Functions.inputText(driver, admissionTypeInputBox, AdmissionType);
 	}
+	
+	public void selectAdmissionType(){
+		Functions.clickElement(driver, admissionTypeDropDownArrow);
+		Functions.clickElement(driver, itemsDropdownSecondOption);
+	}
 
 	public void inputTextIntoAdmissionSrc(String AdmissionSrc){
 		Functions.inputText(driver, admissionSrcInputBox, AdmissionSrc);
+	}
+	
+	public void selectoAdmissionSrc(){
+		Functions.clickElement(driver, admissionSrcDropDownArrow);
+		Functions.clickElement(driver, itemsDropdownSecondOption);
 	}
 
 	public void inputTextIntoDischargeHr(String DischargeHr){
@@ -372,12 +406,10 @@ public class BillEntryPage {
 	//Next buttons	
 
 	public void clickOnNextButton() {
-		Functions.clickElement(driver, nextButtonList.get(0));
+		nextButtonList.click();
 	}
 
-	public void clickOnNextButtonUB04() {
-		Functions.clickElement(driver, nextButtonList.get(nextButtonList.size()-1));
-	}
+	
 
 
 
@@ -672,6 +704,12 @@ public class BillEntryPage {
 
 	public void clickOnZipLabel() {
 		Functions.clickElement(driver, zipLabel);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
