@@ -53,7 +53,7 @@ public class TestScript
 
 	@AfterSuite
 	public void tearDown(){
-		try {Thread.sleep(4000);} catch (InterruptedException e) {	}
+		try {Thread.sleep(3000);} catch (InterruptedException e) {	}
 		driver.quit();
 	}
 
@@ -90,14 +90,14 @@ public class TestScript
 				if(line!=0){
 					try {Thread.sleep(2000);} catch (InterruptedException e) {	}
 					//billEntryPage.tabOutFromDiag(line-1);
-					//try {Thread.sleep(2000);} catch (InterruptedException e) {	}
+					try {Thread.sleep(2000);} catch (InterruptedException e) {	}
 				}
 				fillValuesInLineItemsPage(type,  lineItemsRowsForCMS.get(line), line);
 				
 			}
 			
 //
-			try {Thread.sleep(20000);} catch (InterruptedException e) {	}
+			try {Thread.sleep(10000);} catch (InterruptedException e) {	}
 			String tc=String.valueOf(TotalChargesSum);
 			billEntryPage.inputTextIntoTotalCharges(tc);
 			//billEntryPage.clickIntoPOS();
@@ -352,42 +352,42 @@ public class TestScript
 		// TODO Auto-generated method stub
 		try {Thread.sleep(1000);} catch (InterruptedException e) {	}
 		billEntryPage.inputTextIntoPOS(getData.valueFromHeader("LineitemCMS","POS",rowData), position);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {	}
+		///try {Thread.sleep(500);} catch (InterruptedException e) {	}
 		billEntryPage.inputTextIntoTOS(getData.valueFromHeader("LineitemCMS","TOS",rowData), position);
-		try {Thread.sleep(500);} catch (InterruptedException e) {	}
+		///try {Thread.sleep(500);} catch (InterruptedException e) {	}
 		
 		if(valueFromHeader.equalsIgnoreCase("CMS")){
 			billEntryPage.inputTextIntoBilledCd(getData.valueFromHeader("LineitemCMS","Billed Code",rowData), position);
-			try {Thread.sleep(500);} catch (InterruptedException e) {	}
+			///try {Thread.sleep(500);} catch (InterruptedException e) {	}
 			billEntryPage.inputTextIntoBilledMd(getData.valueFromHeader("LineitemCMS","Billed Mod",rowData), position);
 			try {Thread.sleep(500);} catch (InterruptedException e) {	}
 			//billEntryPage.inputTextIntoRevCd(getData.valueFromHeader("LineitemCMS","ReviewedCd",rowData));
 			//billEntryPage.inputTextIntoRevMd(getData.valueFromHeader("LineitemCMS","ReviewedMd",rowData));
 			billEntryPage.tabOutFromReviewCd(position);
-			try {Thread.sleep(2000);} catch (InterruptedException e) {	}
+			///try {Thread.sleep(500);} catch (InterruptedException e) {	}
 			billEntryPage.tabOutFromReviewMd(position);
-			try {Thread.sleep(500);} catch (InterruptedException e) {	}
+			//try {Thread.sleep(500);} catch (InterruptedException e) {	}
 			billEntryPage.inputTextIntoCMSDays(getData.valueFromHeader("LineitemCMS","DaysUnits",rowData), position);
 			//Thread.sleep(3000);
 			billEntryPage.inputTextIntoChrgs(getData.valueFromHeader("LineitemCMS","Charges",rowData), position);
-			try {Thread.sleep(500);} catch (InterruptedException e) {	}
+			///try {Thread.sleep(500);} catch (InterruptedException e) {	}
 			//billEntryPage.inputTextIntoDiag(getData.valueFromHeader("LineitemCMS","Diag",rowData), position);
 			billEntryPage.tabOutFromDiag(position);
-			try {Thread.sleep(2000);} catch (InterruptedException e) {	}
-			//billEntryPage.inputTextIntoTotalCharges(getData.valueFromHeader("LineitemCMS","TotalCharges",rowData));
+			//try {Thread.sleep(500);} catch (InterruptedException e) {	}
+			///billEntryPage.inputTextIntoTotalCharges(getData.valueFromHeader("LineitemCMS","TotalCharges",rowData));
 
 		}
 		else if(valueFromHeader.equalsIgnoreCase("UB-04")){
 
 			billEntryPage.inputTextIntoRevenueCd(getData.valueFromHeader("LineitemCMS","Rev Code",rowData), position);
-			try {Thread.sleep(500);} catch (InterruptedException e) {	}
+			///try {Thread.sleep(500);} catch (InterruptedException e) {	}
 			if(!getData.valueFromHeader("LineitemCMS","Rev Code",rowData).equalsIgnoreCase(getData.valueFromHeader("LineitemCMS","Billed Code",rowData)))
 				billEntryPage.inputTextIntoBilledCd(getData.valueFromHeader("LineitemCMS","Billed Code",rowData), position);
-			try {Thread.sleep(500);} catch (InterruptedException e) {	}
+			///try {Thread.sleep(500);} catch (InterruptedException e) {	}
 			billEntryPage.inputTextIntoBilledMd(getData.valueFromHeader("LineitemCMS","Billed Mod",rowData), position);
-			try {Thread.sleep(500);} catch (InterruptedException e) {	}
+			///try {Thread.sleep(500);} catch (InterruptedException e) {	}
 			billEntryPage.tabOutFromReviewCd(position);
-			try {Thread.sleep(2000);} catch (InterruptedException e) {	}
+			///try {Thread.sleep(500);} catch (InterruptedException e) {	}
 			billEntryPage.inputTextIntoUB04Days(getData.valueFromHeader("LineitemCMS","DaysUnits",rowData), position);
 			billEntryPage.inputTextIntoChrgs(getData.valueFromHeader("LineitemCMS","Charges",rowData), position);
 			//billEntryPage.inputTextIntoDiag(getData.valueFromHeader("LineitemCMS","Diag",rowData), position);
@@ -395,7 +395,7 @@ public class TestScript
 		}
 		else if(valueFromHeader.equalsIgnoreCase("RX")){
 			billEntryPage.inputTextIntoBillNDCCd(getData.valueFromHeader("LineitemCMS","Billed Code",rowData), position);
-			try {Thread.sleep(1000);} catch (InterruptedException e) {	}
+			///try {Thread.sleep(500);} catch (InterruptedException e) {	}
 			billEntryPage.tabOutFromReviewCd(position);
 			
 			billEntryPage.inputTextIntoQuantity(getData.valueFromHeader("LineitemCMS","Quantity",rowData), position);
@@ -415,6 +415,8 @@ public class TestScript
 
 	
 	public void navigateToUserPortal(){
+		//loginPage.inputTextIntoUserName("malik@ekhealth.com");
+		//loginPage.inputTextIntoPassword("ahsdc1234");
 		loginPage.inputTextIntoUserName("amalik@ekhealth.com");
 		loginPage.inputTextIntoPassword("Summer!2017");
 		loginPage.clickOnSubmitButton();
