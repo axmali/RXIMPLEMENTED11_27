@@ -18,6 +18,8 @@ import org.testng.annotations.Test;
 import com.test.Utils.Functions;
 import com.test.Utils.getData;
 import com.test.pages.BillEntryPage;
+import com.test.pages.DiffLocatorDEBUG;
+import com.test.pages.DiffLocatorQA;
 import com.test.pages.LoginPage;
 
 /**
@@ -29,10 +31,11 @@ public class TestScript
 	static WebDriver driver;
 	static LoginPage loginPage;
 	static BillEntryPage billEntryPage;
-	String URL="http://52.37.60.147/decisions/Login.aspx";  			//QA
-	//String URL="http://52.26.143.217/decisions/Login.aspx";				//Dev
+	String QAURL="http://52.37.60.147/decisions/Login.aspx";  				//QA
+	String DEVURL="http://52.26.143.217/decisions/Login.aspx";				//Dev
+	String DEBUGURL="http://108.39.81.156/decisions";     					 //DEBUG	
 	static String[][] data;
-
+    public static String env="QA";
 
 	@BeforeSuite
 	public void setUp() throws IOException{
@@ -42,7 +45,20 @@ public class TestScript
 		driver=new ChromeDriver();
 		loginPage = new LoginPage(driver);
 		billEntryPage = new BillEntryPage(driver);
-		driver.get(URL);
+		
+		
+		
+		if(env.equalsIgnoreCase("DEV")){
+			driver.get(DEVURL);
+		}
+		if(env.equalsIgnoreCase("QA")){
+			new DiffLocatorQA(driver);
+			driver.get(QAURL);
+		}
+		if(env.equalsIgnoreCase("DEBUG")){
+			new DiffLocatorDEBUG(driver);
+			driver.get(DEBUGURL);
+		}
 		//driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.manage().window().maximize();	
 		//Reader Header data Excel tab
@@ -62,8 +78,8 @@ public class TestScript
 	@Test
 	public void test1() throws IOException, InterruptedException{
 		navigateToUserPortal();
-		for(int rowCMS=2;rowCMS<=2;rowCMS++){
-			navigateToBillEntryMainPage();
+		for(int rowCMS=27;rowCMS<=27;rowCMS++){
+			navigateToBillEntryMainPage(env);
 			fillValuesInBillEntryPage(rowCMS);
 			String billType = getData.valueFromHeader("CMS","Bill_type",rowCMS);
 			
@@ -82,7 +98,7 @@ public class TestScript
 			
 			try {Thread.sleep(3000);} catch (InterruptedException e) {	}
 			billEntryPage.clickOnNextButton();
-			try {Thread.sleep(10000);} catch (InterruptedException e) {	}
+			try {Thread.sleep(8000);} catch (InterruptedException e) {	}
 			String relatedNumberFromCMS = getData.valueFromHeader("CMS","RelNO",rowCMS);
 
 			List<Integer> lineItemsRowsForCMS= getData.rowNumberHavingSameRelatedNumber("LineitemCMS", "RelNO", relatedNumberFromCMS);
@@ -91,6 +107,7 @@ public class TestScript
 					try {Thread.sleep(2000);} catch (InterruptedException e) {	}
 					//billEntryPage.tabOutFromDiag(line-1);
 					try {Thread.sleep(2000);} catch (InterruptedException e) {	}
+					//billEntryPage.tabOutFromDate(line);
 				}
 				fillValuesInLineItemsPage(type,  lineItemsRowsForCMS.get(line), line);
 				
@@ -107,16 +124,22 @@ public class TestScript
 			billEntryPage.clickOnCheckSumButton();
 			System.out.println("CheckSum is Done......");  
 			//try {Thread.sleep(5000);} catch (InterruptedException e) {	}
-			try {Thread.sleep(5000);} catch (InterruptedException e) {	}
+			try {Thread.sleep(3000);} catch (InterruptedException e) {	}
 					
 			billEntryPage.clickOnPriceButton();
 			System.out.println("Pricing is Done......");            //, FeeScheduleDiscount is :" + ActFeeDisc);
-			try {Thread.sleep(10000);} catch (InterruptedException e) {	}
+			try {Thread.sleep(5000);} catch (InterruptedException e) {	}
 			//try {Thread.sleep(5000);} catch (InterruptedException e) {	}
 
 			for(int line=0; line<lineItemsRowsForCMS.size();line++){
+		
 				String ActFeeDisc = billEntryPage.getTextFromFeeScheduleDis(line);
+				System.out.println("FeeScheduleDis: "+ActFeeDisc);
 				getData.writeValueInExcelFile("LineitemCMS","ActualFeeDis",lineItemsRowsForCMS.get(line),ActFeeDisc);
+				
+				String ActMsgCode= billEntryPage.getTextFromMsgCodes(line);
+				System.out.println("MessageCode: "+ActMsgCode);
+				getData.writeValueInExcelFile("LineitemCMS","MessageCode",lineItemsRowsForCMS.get(line),ActMsgCode);
 			}
 
 	
@@ -195,10 +218,11 @@ public class TestScript
 		try{
 			
 			String whichIcon=billEntryPage.checkWhichIcon("BillTxnID");
-			
+		
 			
 			if(whichIcon.equals("warning")){
 				billEntryPage.clickOnBillTaxIdLabel();
+				//try {Thread.sleep(10000);} catch (InterruptedException e) {	}
 				billEntryPage.clickOnFirstRowSelectProvider();
 				billEntryPage.clickOnSelectProviderButton();
 			}
@@ -216,8 +240,6 @@ public class TestScript
 		catch(Exception e){
 			System.out.println("warning icon is not visible for billing txn id");
 		}
-
-
 		Thread.sleep(3000);
 		billEntryPage.inputTextIntoBillNPI(billingNPI);
 		
@@ -230,9 +252,10 @@ public class TestScript
 			
 			 if(whichIcon.equals("warning")){
 					billEntryPage.clickOnZipLabel();
+					try {Thread.sleep(3000);} catch (InterruptedException e) {	}
 					billEntryPage.clickOnFirstRowSelectProvider();
 					billEntryPage.clickOnSelectServiceLocButton();
-					Thread.sleep(3000);
+					Thread.sleep(7000);
 				}
 			
 			else if(whichIcon.equals("valid")){
@@ -286,8 +309,10 @@ public class TestScript
 		billEntryPage.inputTextIntoPatient(patientID);
 		String billTypeTxt=billEntryPage.getAttributeBillTypeText();
 		billEntryPage.inputTextDateIntoBillDate(providerBillDate);
+		Thread.sleep(2000);
 		if(!billTypeTxt.equalsIgnoreCase("RX"))
-				billEntryPage.inputTextIntoProcedureCode(icdProcedureCode);
+			billEntryPage.inputTextIntoProcedureCode(icdProcedureCode);
+		Thread.sleep(2000);
 		billEntryPage.inputTextDateIntoClientRecvdDate(clientRecievedDate);
 		billEntryPage.inputTextDateIntoBillRecvdDate(billRecievedDate);
 
@@ -329,7 +354,7 @@ public class TestScript
 				//billEntryPage.inputTextIntoAdmissionType(admissionType);
 				//billEntryPage.inputTextIntoAdmissionSrc(admissionSource);
 				billEntryPage.selectAdmissionType();
-				billEntryPage.selectoAdmissionSrc();
+				billEntryPage.selectAdmissionSrc();
 				
 				billEntryPage.inputTextIntoDischargeHr(dischargeHour);
 				billEntryPage.inputTextIntoDischrgStatus(dischargeStatus);
@@ -350,11 +375,11 @@ public class TestScript
 	//static float TotalChargesSum= 0.00;
 	private void fillValuesInLineItemsPage(String valueFromHeader, int rowData, int position) throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
-		try {Thread.sleep(1000);} catch (InterruptedException e) {	}
+		try {Thread.sleep(5000);} catch (InterruptedException e) {	}
 		billEntryPage.inputTextIntoPOS(getData.valueFromHeader("LineitemCMS","POS",rowData), position);
-		///try {Thread.sleep(500);} catch (InterruptedException e) {	}
+		try {Thread.sleep(5000);} catch (InterruptedException e) {	}
 		billEntryPage.inputTextIntoTOS(getData.valueFromHeader("LineitemCMS","TOS",rowData), position);
-		///try {Thread.sleep(500);} catch (InterruptedException e) {	}
+		///try {Thread.sleep(1000);} catch (InterruptedException e) {	}
 		
 		if(valueFromHeader.equalsIgnoreCase("CMS")){
 			billEntryPage.inputTextIntoBilledCd(getData.valueFromHeader("LineitemCMS","Billed Code",rowData), position);
@@ -367,7 +392,7 @@ public class TestScript
 			///try {Thread.sleep(500);} catch (InterruptedException e) {	}
 			billEntryPage.tabOutFromReviewMd(position);
 			//try {Thread.sleep(500);} catch (InterruptedException e) {	}
-			billEntryPage.inputTextIntoCMSDays(getData.valueFromHeader("LineitemCMS","DaysUnits",rowData), position);
+			billEntryPage.inputTextIntoCMSDaysUnits(getData.valueFromHeader("LineitemCMS","DaysUnits",rowData), position);
 			//Thread.sleep(3000);
 			billEntryPage.inputTextIntoChrgs(getData.valueFromHeader("LineitemCMS","Charges",rowData), position);
 			///try {Thread.sleep(500);} catch (InterruptedException e) {	}
@@ -415,17 +440,26 @@ public class TestScript
 
 	
 	public void navigateToUserPortal(){
-		//loginPage.inputTextIntoUserName("malik@ekhealth.com");
-		//loginPage.inputTextIntoPassword("ahsdc1234");
 		loginPage.inputTextIntoUserName("amalik@ekhealth.com");
-		loginPage.inputTextIntoPassword("Summer!2017");
+		loginPage.inputTextIntoPassword("8mM89008");                             //("Summer!2017");
 		loginPage.clickOnSubmitButton();
-		loginPage.ClickOnUserPortalButton();
+		//loginPage.ClickOnUserPortalButton();
 	}
 
-	public void navigateToBillEntryMainPage(){
+	public void navigateToBillEntryMainPage(String environment){
+		if(env.equalsIgnoreCase("DEV")){
+			driver.get("http://52.26.143.217/decisions/Primary/H/?FolderId=56b91dee-8a71-11e6-ace6-00155d0fe70e&pageName=Billing%20Entry%20Main%20Page");  //DEV
+		}
+		if(env.equalsIgnoreCase("QA")){
 		driver.get("http://52.37.60.147/decisions/Primary/H/?FolderId=56b91dee-8a71-11e6-ace6-00155d0fe70e&pageName=Billing%20Entry%20Main%20Page");  //QA
-		//driver.get("http://52.26.143.217/decisions/Primary/H/?FolderId=56b91dee-8a71-11e6-ace6-00155d0fe70e&pageName=Billing%20Entry%20Main%20Page");	//DEV
+		
+		}
+		
+		if(env.equalsIgnoreCase("DEBUG")){
+			driver.get("http://108.39.81.156/decisions/Primary/H/?FolderId=56b91dee-8a71-11e6-ace6-00155d0fe70e&pageName=Billing%20Entry%20Main%20Page");  //DEBUG
+			
+			}
+		
 
 	}
 }

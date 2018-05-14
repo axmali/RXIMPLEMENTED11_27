@@ -12,8 +12,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.test.Utils.Functions;
+import com.test.testScripts.TestScript;
 
-public class BillEntryPage {
+public class BillEntryPage extends CommonLocator {
 	WebDriver driver;
 
 	//li[@folder-name="Bill Entry"]//a
@@ -37,163 +38,18 @@ public class BillEntryPage {
 	@FindBy(xpath="//button[contains(@id,'SilverButton_') and text()='Next']/../../../section[not(contains(@style,'display: none;'))]")  ////button[contains(@id,'SilverButton_') and text()='Next']
 	private WebElement nextButtonList;
 
+	private WebElement admissionTypeDropDownArrow;
+
+	private WebElement itemsDropdownSecondOption;
+
 	//Line Item page
-	@FindBy(xpath="//input[contains(@id,'numBox')]")
-	private List<WebElement> numBoxList;
-	//numboxes = driver.findElements(By.xpath("//input[contains(@id,'numBox')]"));
-
-	@FindBy(xpath="//img[@name='Image_Indicator_BillingTaxID_New' and @src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAUoSURBVEhLtVVbbBRlFP5mdmZn/713u2z30nbb3d7SQkoorWmgtGChJIJGrBKQQIgIFAM0SlTsAwoBggn4oomJT1zCiyZGI4H4YtRYItYEUYKUWwqlLAKWLnuZ3Zmd8czuBm1K+2I4m7Pnn3P5v3PmP+cfPG3iinJG2vbyLLs/Yv200i++AgHczZvqV9f+Gt909OjEw6LL/6ODu6tODA/16cqjQV0eP6MPn9ugHxoIf100z0imopyWPtgVbp8z2/dRW8cAl07egZIdh6ukHKmJP+uj1abBH87Grxddn0h8UU5HHGPakUWLX+PlZAy8KMIkMcipe2hta4PTzh8mnxmTnNG4f3d4bXtr087q+pVQMndhL/HBbBGRnrgGUWQw6X+XRSv1se8G478WQ6bQtBX09oIxQTvYtmAd5OQoROYCx41SV4zC4o5CVZOY09wIh92899XlHmcxbApNC9BcXfVW15JnK3WYAS0Oq92Sl9CSsLnc4HiVvDgsbC/3ResdA4WoqfREgP7XvYEyL//O7LkrkJVvw+zw0143AbOH2EseI7B5m5HLpRGtrUCFz7Kzv88XKURPpicCeFzW/d09vXY5fZ9yVMAcPG6NlmFH/3n09Z3DxYt+WJw5aLkbSDw4jQXPpCSXxD4shk+iKQDv9Qfm1VQ51wcr50FV7oG5Kkg7hlgsg1TiAYaGBnHq1DeAegbOsmbouQl4vOOoDUurdm+t6Cjs8i9NAbCJwuHu5etMcvI6TKIEM8sBOiBnHuLYsRME8DNsVpEiGZidwVIyG2pOo7NIcBYbf4S2mHQ7TALYszO0at7cui672wtNS1D2QTpU4za4BeQuQFHSeb+yACM9geTGURJ6DjynUhPE0dIozh/YWrE+71SkxwCNjTDbbPqhhYtfRCY5AkFyQzRTp+QuA9kLqImWFD2BSDWtdYFWIgRRByvtgKZraG2NG719YOlS2Aqe/wHo7Qlv71jQWcMLGQpOweoKAcp5yvQqPTMEKq1oafHluS7iJj0BcFSFJtNZLAPPcxAtMjrb9WBLdejt4raFSX5zc8AbmIUvVr602SKnb9BQ+SGxGGX/O1npdfA0C7RXZWUEtXUhtC+kts0lyEZ6MnAmHjrnhpIeRjCUw/BlNj8S5I4PXZTj+QpsFn5vz/LV7kz2GmWrgjntlL0x/TRcRpacgPh9N7bv+Anv7zmLOyN0jgYo6QtV6LB7usALDDqvoHuJZrM72AFjb37b+rKmaLl9U6RhDjTlISRHGLz2I5mkQrCRulnE6W/HcPXKJYyNjeDLU3QuQiH7POeB0mCe1dApwZqGBOqqxbVb1njaeJcN+5a9sFGUk7/R+AtgVuM6oG7hjWACMaQqorMjAoczBEFwoburiXwMAMNObEj6EjFHOxUWRE7TsKxH5a2CdIgP+aUV/vIGasskBFYKNX2W7vwsstkUcZKuihQUYp/7EiZiG5GN70IkfIXe9wTZiTNxZNU41MwjGszbMFmfp7HREAzLCPvFRdzHe8PKG++eFOJ3PyOnCwTwB5XLU29TUvTHkTTY6DeOBi4vSZGfJlIYa+OBM9ZGEGeiMDMkC4fD+8xZU1OtNVJqT82talgJXbtMk1sBs7Wcuqic1kG6/4lZAGaJ2ErfA8lPXeYl6aO2LCVbKc1LCfmRFF2QJCfNhoRfvjdhcEg5yW3ohMVb7//E7+HWOJ1epmtG1lQkdYbxo2opUXomNjI29AU7VfB4TdJ4pLXhm5AzSuyO9nlMjW0xCn2KBPwDyIG4Q+o2D+AAAAAASUVORK5CYII=']")
-	private WebElement warningIcon;
-
-	@FindBy(xpath="//img[@name='Flow: Image_Indicator_ServiceLocation' and @src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAUoSURBVEhLtVVbbBRlFP5mdmZn/713u2z30nbb3d7SQkoorWmgtGChJIJGrBKQQIgIFAM0SlTsAwoBggn4oomJT1zCiyZGI4H4YtRYItYEUYKUWwqlLAKWLnuZ3Zmd8czuBm1K+2I4m7Pnn3P5v3PmP+cfPG3iinJG2vbyLLs/Yv200i++AgHczZvqV9f+Gt909OjEw6LL/6ODu6tODA/16cqjQV0eP6MPn9ugHxoIf100z0imopyWPtgVbp8z2/dRW8cAl07egZIdh6ukHKmJP+uj1abBH87Grxddn0h8UU5HHGPakUWLX+PlZAy8KMIkMcipe2hta4PTzh8mnxmTnNG4f3d4bXtr087q+pVQMndhL/HBbBGRnrgGUWQw6X+XRSv1se8G478WQ6bQtBX09oIxQTvYtmAd5OQoROYCx41SV4zC4o5CVZOY09wIh92899XlHmcxbApNC9BcXfVW15JnK3WYAS0Oq92Sl9CSsLnc4HiVvDgsbC/3ResdA4WoqfREgP7XvYEyL//O7LkrkJVvw+zw0143AbOH2EseI7B5m5HLpRGtrUCFz7Kzv88XKURPpicCeFzW/d09vXY5fZ9yVMAcPG6NlmFH/3n09Z3DxYt+WJw5aLkbSDw4jQXPpCSXxD4shk+iKQDv9Qfm1VQ51wcr50FV7oG5Kkg7hlgsg1TiAYaGBnHq1DeAegbOsmbouQl4vOOoDUurdm+t6Cjs8i9NAbCJwuHu5etMcvI6TKIEM8sBOiBnHuLYsRME8DNsVpEiGZidwVIyG2pOo7NIcBYbf4S2mHQ7TALYszO0at7cui672wtNS1D2QTpU4za4BeQuQFHSeb+yACM9geTGURJ6DjynUhPE0dIozh/YWrE+71SkxwCNjTDbbPqhhYtfRCY5AkFyQzRTp+QuA9kLqImWFD2BSDWtdYFWIgRRByvtgKZraG2NG719YOlS2Aqe/wHo7Qlv71jQWcMLGQpOweoKAcp5yvQqPTMEKq1oafHluS7iJj0BcFSFJtNZLAPPcxAtMjrb9WBLdejt4raFSX5zc8AbmIUvVr602SKnb9BQ+SGxGGX/O1npdfA0C7RXZWUEtXUhtC+kts0lyEZ6MnAmHjrnhpIeRjCUw/BlNj8S5I4PXZTj+QpsFn5vz/LV7kz2GmWrgjntlL0x/TRcRpacgPh9N7bv+Anv7zmLOyN0jgYo6QtV6LB7usALDDqvoHuJZrM72AFjb37b+rKmaLl9U6RhDjTlISRHGLz2I5mkQrCRulnE6W/HcPXKJYyNjeDLU3QuQiH7POeB0mCe1dApwZqGBOqqxbVb1njaeJcN+5a9sFGUk7/R+AtgVuM6oG7hjWACMaQqorMjAoczBEFwoburiXwMAMNObEj6EjFHOxUWRE7TsKxH5a2CdIgP+aUV/vIGasskBFYKNX2W7vwsstkUcZKuihQUYp/7EiZiG5GN70IkfIXe9wTZiTNxZNU41MwjGszbMFmfp7HREAzLCPvFRdzHe8PKG++eFOJ3PyOnCwTwB5XLU29TUvTHkTTY6DeOBi4vSZGfJlIYa+OBM9ZGEGeiMDMkC4fD+8xZU1OtNVJqT82talgJXbtMk1sBs7Wcuqic1kG6/4lZAGaJ2ErfA8lPXeYl6aO2LCVbKc1LCfmRFF2QJCfNhoRfvjdhcEg5yW3ohMVb7//E7+HWOJ1epmtG1lQkdYbxo2opUXomNjI29AU7VfB4TdJ4pLXhm5AzSuyO9nlMjW0xCn2KBPwDyIG4Q+o2D+AAAAAASUVORK5CYII=']")
-	private WebElement zipwarningIcon;
-
-	@FindBy(xpath="//img[@name='Flow: Image_Indicator_ServiceLocation' and @src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAALhSURBVDhPVVPvS1NRGH7Ovdu9c5ttIk0Ti0LXL8v6A0JwSCEkbM2sLUpBYx/8rn9KUUEwwiACib4GQr8UFD+kUi5TZ4UbTjLU7e5uu6fnzhH6wrnn8p73fd7ned9zVNSsB7h1Gpg5B/xcARZr7iMWAW63AXOXgB/fDsdcB+7EXC7r3diYHPZ6ZRQYpFscnB7YPSCW0DTrdSgkE7ouB4AHtl+1Kze63a9Gx8eFv74eHZ2dWJ2fD7eXSmss8cUOYmSsQdcnbvb0CMWycCoQQCaTiZyxrJQIATvjo6O+AJ3F3V1YpRLKhQImk0lsGsaQBpjHNW2it7sbxWIR5v4+yowp7e1hcmWlrJ4FVlcXFvo7gkEBHlQY4CiXcbGtDZupVNjjcEQjXV0QlQpkPg+L4IIxs+vr2JNypKqTmmONrBKPRqEJAWGacDDBZmT/K9wLuRwM7iZZzBHkN5B4DjyrTuErOxqsVFLp5eVoR2srXNTpIBs1m4VIp6GQrs1KJegsWWSlTDxlMlOt/2NkwxaDbEp6bS163u+HSooaK9Y5ndAdDlhk8mFnBxuWlXhUS7bzFPtz2BRWyi8tQefu1XUcc7ng1TQ4eSakhBso8ldWg2n/GdijahRi4gZH2eTzwcMkD6t7CKKrKjTuJxmXKRTCV4G1T7URVwHuMtnH5FBdHXgn4CJlN9cutSvUXe/xwCSjCn0tjP9VLIYvE2SGIGoYGPADL6/puvCxilNRqpoLbNabrS0sUneQTECfQbASz5s4qaxphtuB76KPmnpVVWsgTVurrVuh1ikmZixriJq3W4R429fcjBKB9tlMe+UNA5P5fFm9wIv0V8roCbsyV4kjnGL3c0x+DCSnWeUKH9B6oRBvJYsizw0CfCTDfeC+ugwsBKlnW8pIgNSmiZyTcohzSlJutdufbRAp5zYMI97MmPe8iX+kHHwCvLDPq9YPxLnMWPXhHX2JNRMPgd4RSh5m7IEL+AdjTE2UA6cIWgAAAABJRU5ErkJggg==']")
-	private WebElement zipcrossIcon;
-	
-	@FindBy(xpath="//img[@name='Image_Indicator_BillingTaxID_New' and @src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAB3RJTUUH2AQPDQ0kHi+LuwAAAAlwSFlzAAALEgAACxIB0t1+/AAAAARnQU1BAACxjwv8YQUAAAJsSURBVHjalZNNTBNRFIXPvJnH1JZ2plPaRoUQEDCGv4IQRTeisUExFdHEUONCWLDTlVvdiQtZmRg1URJ0oWjCyrULDS4AsQSNEghQJdBi/yht6bQzz0ICIcSEcpcv5zv35dx7gf0VJ9UWDEo1QkhpEE7vkwWker6v+moJ8z52M6WBxqzHhRY+X1iupzcscmH/lZ52LkFjMFUQMTgZ95C84BrawAh7frn7IhfKLiHKglATWTCNLe5pYC2DnNEy79u9bqNmSiFKglhfS2Pq3Z8AE9Id2wY2F0o3QtptoJn4F42tdeWOcglhsgSdavAN+tN8gd4ZGcfCpoHkEu4yns7lvjqEU6BbsKVO6LWVKJ3N5+oQ0H6D2HLwgB9ZVb8TGsuObGiIpZE/LxTQvq7bnZzjqPWaHBPe5t55czMqOcL1t3nPYCW7CGZLY/rDMmLzydeR8fSzrSa80SmMXOptNRstRjgqFaz8DR1jVCtFCj1nu04eMRULWDNGsBpMwvfSPx0lqgcBqDsM6E3BrjtNFTziahRSmYjVxZTLflgpafLUIoQlCDKHzw9+qbquXVj36Qs7M+KJUxsO/Yy38XbdYa82Q9cYlCozqurLkRSjoE4OEwNziC0k7kcmMkO7Q+YzASTIQX04PJnskMuMSlGlBYQQaGIaNNc5NBPHjzf+0fC3zK2cnu022JxCchLLEIl77OnMcjyQRqHDANFKQS0CRp/MqDCie2Oi/9uT7T2Ifl2f4ynzfHr4Pcl0BumQCb5X88iktEfhL5mpvA/GesJwvbRd1r0fW5jsEmdRjAN5w1tV1GS4Z2s0JJVm0b2X9h/XIOZvGyydWAAAAABJRU5ErkJggg==']")
-	private WebElement tickIconBillingTxID;
-	
-	@FindBy(xpath="//img[@name='Flow: Image_Indicator_ServiceLocation' and @src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAB3RJTUUH2AQPDQ0kHi+LuwAAAAlwSFlzAAALEgAACxIB0t1+/AAAAARnQU1BAACxjwv8YQUAAAJsSURBVHjalZNNTBNRFIXPvJnH1JZ2plPaRoUQEDCGv4IQRTeisUExFdHEUONCWLDTlVvdiQtZmRg1URJ0oWjCyrULDS4AsQSNEghQJdBi/yht6bQzz0ICIcSEcpcv5zv35dx7gf0VJ9UWDEo1QkhpEE7vkwWker6v+moJ8z52M6WBxqzHhRY+X1iupzcscmH/lZ52LkFjMFUQMTgZ95C84BrawAh7frn7IhfKLiHKglATWTCNLe5pYC2DnNEy79u9bqNmSiFKglhfS2Pq3Z8AE9Id2wY2F0o3QtptoJn4F42tdeWOcglhsgSdavAN+tN8gd4ZGcfCpoHkEu4yns7lvjqEU6BbsKVO6LWVKJ3N5+oQ0H6D2HLwgB9ZVb8TGsuObGiIpZE/LxTQvq7bnZzjqPWaHBPe5t55czMqOcL1t3nPYCW7CGZLY/rDMmLzydeR8fSzrSa80SmMXOptNRstRjgqFaz8DR1jVCtFCj1nu04eMRULWDNGsBpMwvfSPx0lqgcBqDsM6E3BrjtNFTziahRSmYjVxZTLflgpafLUIoQlCDKHzw9+qbquXVj36Qs7M+KJUxsO/Yy38XbdYa82Q9cYlCozqurLkRSjoE4OEwNziC0k7kcmMkO7Q+YzASTIQX04PJnskMuMSlGlBYQQaGIaNNc5NBPHjzf+0fC3zK2cnu022JxCchLLEIl77OnMcjyQRqHDANFKQS0CRp/MqDCie2Oi/9uT7T2Ifl2f4ynzfHr4Pcl0BumQCb5X88iktEfhL5mpvA/GesJwvbRd1r0fW5jsEmdRjAN5w1tV1GS4Z2s0JJVm0b2X9h/XIOZvGyydWAAAAABJRU5ErkJggg==']")
-	private WebElement tickIconZip;
-	
-
-	@FindBy(xpath="//button[text()='Select Provider']")
-	private WebElement selectProviderButton;
-
-	@FindBy(xpath="//button[text()='Select Service Location']")
-	private WebElement selectServiceLocButton;
-
-	@FindBy(xpath="//button[contains(text(),'Create New Address')]")
-	private WebElement createNewAddressButton;
-
-	@FindBy(xpath="//button[contains(@id,'SilverButton_') and text()='Ok']")  ////button[contains(@id,'SilverButton_') and text()='Next']
-	private WebElement okButtonForNewAddress;
-
-
-	@FindBy(xpath="//img[@name='Image_Indicator_BillingTaxID_New' and @src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAB3RJTUUH2AQPDQ0laSi7LQAAAAlwSFlzAAALEgAACxIB0t1+/AAAAARnQU1BAACxjwv8YQUAAALdSURBVHjabVPvS1NRGH7OvfPeuU03M9TEAsmVKIz+gBA0w4SKzWmyRSkk7IPf9U8JKvowwiACi74GQj9QcPghlXKacxk2U8Fwbvfuxz09VzYx6LDDOTvnfZ73ed73XBWVcRMYagcWrgLbG8AK/jNCwEgHkOgCvn87GzMAjEacTuv91JR85PHIIWCMx+Is+D4QiWma9bqvT8Z0XY4CD+1z1c58zuV6NTk9LXx1degOBLC5tBTsKBZTTPHFDiJbxKfrM7f7+4ViWbjU1IRfmUyo3bKS4gZwODU56W3ioXl0BKtYRCmfx2w8joxhjGtA4bymzQz29sI0TRSOj1FiTDGbxezGRkm9AmxuLi8Pd/v9ArwoM8BRKqHr8mXsJJNBl8MRDvX0QJTLkLkcLJILxixubSEr5cSJzzAlNjJLNByGJgREoQAHAbYie69wze/vw+BaoIoESXaA2HPgmWoTfGVF/eVyMr22Fu5ua4OTPh1Uo+7uQqTTUCjXVqWSdJEqdqWMPSWYUEutVnnFJmFR0qlUuNPng0qJGjPW1tRAdzhgUcnHw0NsW1bscQVs45SzrbL/KMyUW12FztWj66h3OuHRNNTYfZUStYDJraxiThXYrWoQYmaArWz2euEmyM3sbpLoqgqN60XGZfL54DUg9bnS4hOCCH/1BPfV1qLR5YKTkll9HNG7Qt91bjcKVFTmWSvjf5pmMECSBZKoQeCeD3h5XdeFl1lqFOXEc57Feru3hxX69lMJeGaQrMj7ZnYqUygE+QTWxV16uqWqWgNl2l5t3wq9zhH427LGncBBqxDv7rS0oEiiYxbTnjnDwJtcrqR28iH9kTJ8wc7MWWQL51j9A4JZ7fg8s9BzYiufj7ZRhcl7gwSfqDALPFDXgGVKSR1IGWqitHkycz/OPser1WbB1gNSJn4YRrSFMR/4Eg+lHHsCvDht4TAQHeG7j5x8eP9+iZUhJoBBTpMzWj38C2dRTZc15mQUAAAAAElFTkSuQmCC']")
-	private WebElement crossIcon;
-
-	@FindBy(xpath="//input[@value='Billing Tax ID:']")
-	private WebElement billTaxIdLabel;
-
-	@FindBy(xpath="//input[@value='Service Location ZIP:']")
-	private WebElement zipLabel;
-
-
-
-	@FindBy(css=".jqgfirstrow+tr")
-	private WebElement firstRowSelectProvider;
-
-	@FindBy(xpath="//button[contains(@id,'SilverEventButton_') and text()='Checksum']")
-	private WebElement checksumButton;
-
-	@FindBy(xpath="//button[contains(text(),'Price') and @class='buttonControl FullHeightAndWidth EnableControl']")
-	private WebElement priceButton;
-
-	@FindBy(xpath="//button[text()='Create Link']")
-	private List<WebElement> createLinkButtons;
-
-	@FindBy(xpath="//button[contains(@id,'SilverEventButton_') and text()='Query NPI Data']")
-	private WebElement queryNPIButton;
+	;
 
 
 	////------------------------------------New Xpaths......................................................
 
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()=' Client:']/../../../../../../../../../td[3]//input[contains(@id,'ItemSelectorText')]")
-	private WebElement clientInputBox;
 
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td//input[@value='Claim #:']/../../../../../../../../../td[3]//input[contains(@id,'SilverTextBox')]")
-	private WebElement claimInputBox;
 
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Reviewed State:']/../../../../../../../../../td[3]//input[contains(@id,'ItemSelectorText')]")
-	private WebElement stateInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Pay Code:']/../../../../../../../../../td[3]//input[contains(@id,'ItemSelectorText')]")
-	private WebElement paycodeInputBox;
-	
-	
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Pay Code:']/../../../../../../../../../td[3]//span[contains(@class,'downarrow commondropdownArrow')]")
-	private WebElement paycodeDropDownArrow;
-	
-	@FindBy(xpath="//div[contains(@class,'viewPicker-list live-click-iphone-patch  Commonscroll itemListAt')]//ul/li[2]")
-	private WebElement itemsDropdownSecondOption;
-	
-	
-	
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Bill ID:']/../../../../../../../../../td[3]//input[contains(@id,'SilverTextBox')]")
-	private WebElement billIDInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td//input[@value='Billing Tax ID:']/../../../../../../../../../td[3]//input[contains(@id,'SilverTextBox')]")
-	private WebElement billTaxIDInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Billing NPI:']/../../../../../../../../../td[3]//input[contains(@id,'SilverTextBox')]")
-	private WebElement billNPIInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td//input[@value='Rendering NPI:']/../../../../../../../../../td[3]//input[contains(@id,'SilverTextBox')]")
-	private WebElement renderingNPIInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td//input[@value='Service Location ZIP:']/../../../../../../../../../td[3]//input[contains(@id,'SilverTextBox')]")
-	private WebElement locationZIPIInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Provider Facility NPI:']/../../../../../../../../../td[3]//input[contains(@id,'SilverTextBox')]")
-	private WebElement facilityNPIInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Bill Type:']/../../../../../../../../../td[3]//input[contains(@id,'ItemSelectorText')]")
-	private WebElement billTypeInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Bill Type:']/../../../../../../../../../td[3]//span[contains(@id,'deleteTextImage')]")
-	private WebElement billTypeDeleteIcon;
-	
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Specialty:']/../../../../../../../../../td[3]//input[contains(@id,'ItemSelectorText')]")
-	private WebElement specialtyeInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Patient ID:']/../../../../../../../../../td[3]//input[contains(@id,'SilverTextBox')]")
-	private WebElement patientIDInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td//input[@value='ICD Procedure Codes:']/../../../../../../../../../td[3]//input[contains(@id,'SilverTextBox')]")
-	private WebElement procedureCodeInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Type of Bill:']/../../../../../../../../../td[3]//input[contains(@id,'SilverTextBox')]")
-	private WebElement typeOfBillInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//input[@value='Medicare Number:']/../../../../../../../../../td[8]//input")
-	private WebElement medicareNoInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Admission Hour:']/../../../../../../../../../td//input[contains(@id,'SilverTextBox')]")
-	private WebElement admissionHourInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Admission Type:']/../../../../../../../../../td//input[contains(@id,'ItemSelectorText')]")
-	private WebElement admissionTypeInputBox;
-
-	
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Admission Source:']/../../../../../../../../../td//input[contains(@id,'ItemSelectorText')]")
-	private WebElement admissionSrcInputBox;
-	
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Admission Type:']/../../../../../../../../../td//span[contains(@class,'downarrow commondropdownArrow')]")
-	private WebElement admissionTypeDropDownArrow;
-
-	
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Admission Source:']/../../../../../../../../../td//span[contains(@class,'downarrow commondropdownArrow')]")
-	private WebElement admissionSrcDropDownArrow;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Discharge Hour:']/../../../../../../../../../td[8]//input[contains(@id,'SilverTextBox')]")
-	private WebElement dischargenHourInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Discharge Status:']/../../../../../../../../../td[13]//input[contains(@id,'SilverTextBox')]")
-	private WebElement dischargenStatusInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Admitting Diagnosis:']/../../../../../../../../../td//input[contains(@id,'SilverTextBox')]")
-	private WebElement admittingDiagnosisInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td//input[@value='Principal Proc Codes:']/../../../../../../../../../td[8]//input[contains(@id,'SilverTextBox')]")
-	private WebElement principalProcCodesInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='Operating Prov NPI:']/../../../../../../../../../td[3]//input[contains(@id,'SilverTextBox')]")
-	private WebElement operatingProvNPIInputBox;
-
-	@FindBy(xpath="//table[@class='SilverGrid validation-Holder  ']/tbody/tr/td[2]//div[text()='DRG:']/../../../../../../../../../td[8]//input[contains(@id,'SilverTextBox')]")
-	private WebElement DRGInputBox;
 
 
 
@@ -207,6 +63,14 @@ public class BillEntryPage {
 	}
 
 	public void inputTextIntoClient(String client){
+		WebElement clientInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			clientInputBox=DiffLocatorQA.clientInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			clientInputBox=DiffLocatorDEBUG.clientInputBox;
+
+		}
 		Functions.inputText(driver,clientInputBox, client);
 		try {
 			Thread.sleep(2000);
@@ -219,17 +83,36 @@ public class BillEntryPage {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	public void inputTextIntoClaim(String claim){
+		WebElement claimInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			claimInputBox=DiffLocatorQA.claimInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			claimInputBox=DiffLocatorDEBUG.claimInputBox;
+
+		}
+
 		Functions.inputText(driver, claimInputBox, claim);
 	}
 
 	public void inputTextIntoState(String state){
+		WebElement stateInputBox = null;
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		}
+
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			stateInputBox=DiffLocatorQA.stateInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			stateInputBox=DiffLocatorDEBUG.stateInputBox;
+
 		}
 		System.out.println("value: "+Functions.isEmpty(stateInputBox));
 		if(Functions.isEmpty(stateInputBox))
@@ -237,57 +120,142 @@ public class BillEntryPage {
 	}
 
 	public void inputTextIntoPaycode(String paycode){
+		WebElement paycodeInputBox = null;
+
+		if(Functions.isEmpty(paycodeInputBox))
+			if(TestScript.env.equalsIgnoreCase("QA")){
+				paycodeInputBox=DiffLocatorQA.paycodeInputBox;
+			}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			paycodeInputBox=DiffLocatorDEBUG.paycodeInputBox;
+
+		}
 		Functions.inputText(driver, paycodeInputBox, paycode);
 	}
-	
-	public void selectPaycode(){
-		Functions.clickElement(driver, paycodeDropDownArrow);
-		Functions.clickElement(driver,itemsDropdownSecondOption);
-		
-	}
-	
 
+	public void selectPaycode(){
+		WebElement Paycode;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			Functions.clickElement(driver, DiffLocatorQA.paycodeDropDownArrow);
+			Functions.clickElement(driver,DiffLocatorQA.itemsDropdownSecondOption);
+		}
+	if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			Functions.clickElement(driver, DiffLocatorDEBUG.paycodeDropDownArrow);
+			Functions.clickElement(driver,DiffLocatorDEBUG.itemsDropdownSecondOption);
+		}
+
+	}
 
 	public boolean isEmptyBillID(){
-		return Functions.isEmpty(billIDInputBox);
+		return Functions.isEmpty(DiffLocatorQA.billIDInputBox);
 	}
 
 	public void inputTextIntoBillID(String billid){
-		Functions.inputText(driver, billIDInputBox, billid);
+		WebElement billIDInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			billIDInputBox=DiffLocatorQA.billIDInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			billIDInputBox=DiffLocatorDEBUG.billIDInputBox;
+		}
+			Functions.inputText(driver, billIDInputBox, billid);
+		
 	}
 
 	public void inputTextIntoBillTaxID(String billtaxid){
+		WebElement billTaxIDInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			billTaxIDInputBox=DiffLocatorQA.billTaxIDInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			billTaxIDInputBox=DiffLocatorDEBUG.billTaxIDInputBox;
+		}
 		Functions.inputText(driver,billTaxIDInputBox, billtaxid);
 	}
 
-	public WebElement billTaxIDElement(){
-		return billTaxIDInputBox;
+
+	public WebElement billTaxIDElement(){/////////////////
+		return DiffLocatorQA.billTaxIDInputBox;
 	}
 
 	public void inputTextIntoBillNPI(String billNPI){
+		WebElement billNPIInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			billNPIInputBox=DiffLocatorQA.billNPIInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			billNPIInputBox=DiffLocatorDEBUG.billNPIInputBox;
+		}
+
 		Functions.inputText(driver, billNPIInputBox, billNPI);
 	}
 
 	public void inputTextIntoRenderNPI(String renderNPI){
-		Functions.inputText(driver, renderingNPIInputBox, renderNPI);
+		WebElement renderNPIInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			renderNPIInputBox=DiffLocatorQA.renderingNPIInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			renderNPIInputBox=DiffLocatorDEBUG.renderingNPIInputBox;
+
+		}
+		Functions.inputText(driver, renderNPIInputBox, renderNPI);
 	}
 
+
 	public void inputTextIntoLoczip(String loczip){
+		WebElement locationZIPIInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			locationZIPIInputBox=DiffLocatorQA.locationZIPIInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			locationZIPIInputBox=DiffLocatorDEBUG.locationZIPIInputBox;
+
+		}
+
 		Functions.inputText(driver, locationZIPIInputBox, loczip);
 	}
 
+
 	public void inputTextIntoFacilityNPI(String FacilityNPI){
+		WebElement facilityNPIInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			facilityNPIInputBox=DiffLocatorQA.facilityNPIInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			facilityNPIInputBox=DiffLocatorDEBUG.facilityNPIInputBox;
+
+
+		}
 		Functions.inputText(driver,facilityNPIInputBox , FacilityNPI);
 	}
 
 
 
 	public String getAttributeBillTypeText(){
+		WebElement billTypeInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			billTypeInputBox=DiffLocatorQA.billTypeInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			billTypeInputBox=DiffLocatorDEBUG.billTypeInputBox;
+
+		}
 		return Functions.getAttribute(billTypeInputBox, "value");
 	}
-	
+
 	public void inputTextIntoeBillType(String billtype){
-		Functions.clickElement(driver, billTypeInputBox);
+		WebElement billTypeInputBox = null, billTypeDeleteIcon = null;
+		
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			billTypeInputBox=DiffLocatorQA.billTypeInputBox;
+			billTypeDeleteIcon=DiffLocatorQA.billTypeDeleteIcon;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			billTypeInputBox=DiffLocatorDEBUG.billTypeInputBox;
+			billTypeDeleteIcon=DiffLocatorDEBUG.billTypeDeleteIcon;
+		}
+		Functions.clickElement(driver, billTypeInputBox );
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -295,129 +263,255 @@ public class BillEntryPage {
 			e.printStackTrace();
 		}
 		Functions.clickElement(driver, billTypeDeleteIcon);
+
 		Functions.inputText(driver, billTypeInputBox, billtype);
 		//Functions.tabOut(billTypeInputBox);
 	}
 
 	public String getAttributeSpecialtyText(){
-		return Functions.getAttribute(specialtyeInputBox, "value");
+		WebElement specialtyInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			specialtyInputBox=DiffLocatorQA.specialtyeInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			specialtyInputBox=DiffLocatorDEBUG.specialtyeInputBox;
+
+		}
+		return Functions.getAttribute(DiffLocatorDEBUG.specialtyeInputBox, "value");
 	}
 
+
 	public void inputTextDateIntoDOSFrm(String DOSFrm){
-		Functions.inputText(driver, dateInputBoxes.get(1), DOSFrm);
+		Functions.inputText(driver, dateInputBoxes.get(1), DOSFrm);  	 //Date
 	}
 
 	public void inputTextIntoDOSTO(String DOSTO){    
-	Functions.inputText(driver,dateInputBoxes.get(2), DOSTO);
+		Functions.inputText(driver,dateInputBoxes.get(2), DOSTO);		//Date
 	}
 
 
 
 	public void inputTextIntoPatient(String Patient){
-		Functions.inputText(driver, patientIDInputBox, Patient);
+		WebElement PatientInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			PatientInputBox=DiffLocatorQA.patientIDInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			PatientInputBox=DiffLocatorDEBUG.patientIDInputBox;
+
+		}
+		Functions.inputText(driver, PatientInputBox, Patient);
 	}
 
-	public void inputTextDateIntoBillDate(String BillDate){   //Provider Bill Date
+	public void inputTextDateIntoBillDate(String BillDate){   		//Provider Bill Date
 		Functions.inputText(driver, dateInputBoxes.get(3), BillDate);
 	}
 
 	public void inputTextIntoProcedureCode(String ProcedureCode){
-		Functions.inputText(driver, procedureCodeInputBox, ProcedureCode);
-		Functions.pressTabKey(procedureCodeInputBox);
+		WebElement ProcedureCodeInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			ProcedureCodeInputBox=DiffLocatorQA.procedureCodeInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			ProcedureCodeInputBox=DiffLocatorDEBUG.procedureCodeInputBox;
+
+		}
+		Functions.inputText(driver, ProcedureCodeInputBox, ProcedureCode);
+		Functions.pressTabKey(ProcedureCodeInputBox);
 	}
 
-	public void inputTextDateIntoClientRecvdDate(String ClientRecvdDate){
+	public void inputTextDateIntoClientRecvdDate(String ClientRecvdDate){		//Date
 		Functions.inputText(driver, dateInputBoxes.get(4), ClientRecvdDate);
 	}
 
-	public void inputTextDateIntoBillRecvdDate(String BillRecvdDate){
+	public void inputTextDateIntoBillRecvdDate(String BillRecvdDate){  			//Date
 		Functions.inputText(driver, dateInputBoxes.get(5), BillRecvdDate);
 	}
 
 	//  UB-04 Header fields
 
 	public void inputTextIntoTypeofBill(String TypeofBill){
-		Functions.inputText(driver, typeOfBillInputBox, TypeofBill);
+		WebElement TypeofBillInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			TypeofBillInputBox=DiffLocatorQA.typeOfBillInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			TypeofBillInputBox=DiffLocatorDEBUG.typeOfBillInputBox;
+
+		}
+		Functions.inputText(driver, TypeofBillInputBox, TypeofBill);
 	}
 
 	public void inputTextIntoMedicareNO(String MedicareNO){
-		Functions.inputText(driver, medicareNoInputBox, MedicareNO);
+		WebElement MedicareNOInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			MedicareNOInputBox=DiffLocatorQA.medicareNoInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			MedicareNOInputBox=DiffLocatorDEBUG.medicareNoInputBox;
+
+		}
+
+		Functions.inputText(driver, MedicareNOInputBox, MedicareNO);
 	}
 
-	public void inputTextDateIntoADmDt(String ADmDt){
-		Functions.inputText(driver, dateInputBoxes.get(7), ADmDt);
+	public void inputTextDateIntoADmDt(String ADmDt){							//Date
+		Functions.inputText(driver, dateInputBoxes.get(7), ADmDt);	
 	}
 
-	public void inputTextDateIntoDschgDt(String DschgDt){
+	public void inputTextDateIntoDschgDt(String DschgDt){						//Date
 		Functions.inputText(driver, dateInputBoxes.get(8), DschgDt);
 	}
 
 	public void inputTextIntoAdmsnHr(String AdmsnHr){
-		Functions.inputText(driver, admissionHourInputBox, AdmsnHr);
+		WebElement AdmsnHrInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			AdmsnHrInputBox=DiffLocatorQA.admissionHourInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			AdmsnHrInputBox=DiffLocatorDEBUG.admissionHourInputBox;
+		}
+		Functions.inputText(driver, AdmsnHrInputBox, AdmsnHr);
 	}
 
 	public void inputTextIntoAdmissionType(String AdmissionType){
-		Functions.inputText(driver, admissionTypeInputBox, AdmissionType);
+		WebElement AdmsnTypeInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			AdmsnTypeInputBox=DiffLocatorQA.admissionTypeInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			AdmsnTypeInputBox=DiffLocatorDEBUG.admissionTypeInputBox;
+		}
+
+		Functions.inputText(driver, AdmsnTypeInputBox, AdmissionType);
 	}
-	
+
 	public void selectAdmissionType(){
-		Functions.clickElement(driver, admissionTypeDropDownArrow);
+		WebElement SelectAdmissionType = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			SelectAdmissionType = DiffLocatorQA.admissionTypeDropDownArrow;
+			Functions.clickElement(driver, admissionTypeDropDownArrow);
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			SelectAdmissionType=DiffLocatorDEBUG.admissionTypeDropDownArrow;
+			Functions.clickElement(driver, admissionTypeDropDownArrow);
+		}
+
 		Functions.clickElement(driver, itemsDropdownSecondOption);
 	}
 
 	public void inputTextIntoAdmissionSrc(String AdmissionSrc){
-		Functions.inputText(driver, admissionSrcInputBox, AdmissionSrc);
+		WebElement AdmsnSrceInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			AdmsnSrceInputBox=DiffLocatorQA.admissionSrcDropDownArrow;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			AdmsnSrceInputBox=DiffLocatorDEBUG.admissionSrcDropDownArrow;
+		}
+		Functions.inputText(driver, AdmsnSrceInputBox, AdmissionSrc);
 	}
-	
-	public void selectoAdmissionSrc(){
-		Functions.clickElement(driver, admissionSrcDropDownArrow);
+
+	public void selectAdmissionSrc(){
+		WebElement AdmissionSrcInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			AdmissionSrcInputBox=DiffLocatorQA.admissionSrcDropDownArrow;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			AdmissionSrcInputBox=DiffLocatorDEBUG.admissionSrcDropDownArrow;
+		}
+		Functions.clickElement(driver, AdmissionSrcInputBox);
 		Functions.clickElement(driver, itemsDropdownSecondOption);
 	}
 
 	public void inputTextIntoDischargeHr(String DischargeHr){
-		Functions.inputText(driver, dischargenHourInputBox, DischargeHr);
+		WebElement DischargeHrInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			DischargeHrInputBox=DiffLocatorQA.dischargenHourInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			DischargeHrInputBox=DiffLocatorDEBUG.dischargenHourInputBox;
+		}
+		Functions.inputText(driver, DischargeHrInputBox, DischargeHr);
 	}
 
 	public void inputTextIntoDischrgStatus(String DischrgStatus){
-		Functions.inputText(driver, dischargenStatusInputBox, DischrgStatus);
+		WebElement DischargeStatusInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			DischargeStatusInputBox=DiffLocatorQA.dischargenStatusInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			DischargeStatusInputBox=DiffLocatorDEBUG.dischargenStatusInputBox;
+		}
+		Functions.inputText(driver, DischargeStatusInputBox, DischrgStatus);
 	}
 
 	public void inputTextIntoAdmittingDiag(String AdmittingDiag){
-		Functions.inputText(driver, admittingDiagnosisInputBox, AdmittingDiag);
+		WebElement AdmitDaigInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			AdmitDaigInputBox=DiffLocatorQA.admittingDiagnosisInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			AdmitDaigInputBox=DiffLocatorDEBUG.admittingDiagnosisInputBox;
+		}
+		Functions.inputText(driver, AdmitDaigInputBox, AdmittingDiag);
 	}
 
 	public void inputTextIntoPrinProcCDs(String PrinProcCDs){
-		Functions.inputText(driver, principalProcCodesInputBox, PrinProcCDs);
+		WebElement PrinProcCdsInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			PrinProcCdsInputBox=DiffLocatorQA.principalProcCodesInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			PrinProcCdsInputBox=DiffLocatorDEBUG.principalProcCodesInputBox;
+		}
+		Functions.inputText(driver, PrinProcCdsInputBox, PrinProcCDs);
 	}
 
-	public void inputTextIntoPrinProcDt(String PrinProcDt){
+	public void inputTextIntoPrinProcDt(String PrinProcDt){							//Date
 		Functions.inputText(driver, dateInputBoxes.get(9), PrinProcDt);
 	}
 
 	public void inputTextIntoOpProvNPI(String OpProvNPI){
-		Functions.inputText(driver, operatingProvNPIInputBox, OpProvNPI);
+		WebElement OperatingProviderInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			OperatingProviderInputBox=DiffLocatorQA.operatingProvNPIInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			OperatingProviderInputBox=DiffLocatorDEBUG.operatingProvNPIInputBox;
+		}
+		Functions.inputText(driver, OperatingProviderInputBox, OpProvNPI);
 	}
 
 	public void inputTextIntoDrgcd(String Drgcd){
-		Functions.inputText(driver, DRGInputBox, Drgcd);
+		WebElement DrgCdInputBox = null;
+		if(TestScript.env.equalsIgnoreCase("QA")){
+			DrgCdInputBox=DiffLocatorQA.DRGInputBox;
+		}
+		if(TestScript.env.equalsIgnoreCase("DEBUG")|| TestScript.env.equalsIgnoreCase("DEV")){
+			DrgCdInputBox=DiffLocatorDEBUG.DRGInputBox;
+		}
+		Functions.inputText(driver, DrgCdInputBox, Drgcd);
 	}
 
 
 	//Next buttons	
 
 	public void clickOnNextButton() {
-		nextButtonList.click();
+		CommonLocator.nextButtonList.click();
 	}
 
-	
+
 
 
 
 	//Line Items   CMS
 	//Line 1
 
+	int dif = 10;
+	int numdif = 9;
+
 	public void inputTextIntoPOS(String POS, int position){
-		int locator=Functions.newLocator(2, position, 10);
+		int locator=Functions.newLocator(2, position, dif);
 		Functions.inputText(driver, silverInputBoxes.get(locator), POS);
 	}
 	public void clickIntoPOS(){
@@ -425,48 +519,48 @@ public class BillEntryPage {
 	}
 
 	public void inputTextIntoTOS(String TOS, int position){
-		int locator=Functions.newLocator(3, position, 10);
+		int locator=Functions.newLocator(3, position, dif);
 		Functions.inputText(driver, silverInputBoxes.get(locator), TOS);
 	}
 
 	public void inputTextIntoBilledCd(String BilledCd, int position){
-		int locator=Functions.newLocator(5, position, 10);
+		int locator=Functions.newLocator(5, position, dif);
 		Functions.inputText(driver, silverInputBoxes.get(locator), BilledCd);
 	}
 
 	public void inputTextIntoBilledMd(String BilledMd, int position){
-		int locator=Functions.newLocator(6, position, 10);
+		int locator=Functions.newLocator(6, position, dif);
 		Functions.inputText(driver, silverInputBoxes.get(locator), BilledMd);
 	}
 
 	public void inputTextIntoReviewCd(String ReviewCd, int position){
-		int locator=Functions.newLocator(7, position, 10);
+		int locator=Functions.newLocator(7, position, dif);
 		Functions.inputText(driver, silverInputBoxes.get(locator), ReviewCd);
 	}
 
 	public void tabOutFromReviewCd(int position){
-		int locator=Functions.newLocator(7, position, 10);
+		int locator=Functions.newLocator(7, position, dif);
 		Functions.tabOut(silverInputBoxes.get(locator));
 	}
 
 	public void inputTextIntoReviewMd(String ReviewMd, int position){
-		int locator=Functions.newLocator(8, position, 10);
+		int locator=Functions.newLocator(8, position, dif);
 		Functions.inputText(driver, silverInputBoxes.get(locator), ReviewMd);
 	}
 
 	public void tabOutFromReviewMd(int position){
-		int locator=Functions.newLocator(8, position, 10);
+		int locator=Functions.newLocator(8, position, dif);
 		Functions.tabOut(silverInputBoxes.get(locator));
 	}
 
 
-	public void inputTextIntoCMSDays(String CMSDays, int position){
-		int locator=Functions.newLocator(2, position, 9);
-		Functions.inputText(driver, numBoxList.get(locator), CMSDays);
+	public void inputTextIntoCMSDaysUnits(String CMSDaysUnits, int position){
+		int locator=Functions.newLocator(3, position, numdif);
+		Functions.inputText(driver, numBoxList.get(locator), CMSDaysUnits);
 	}
 
 	public void inputTextIntoChrgs(String  Chrgs, int position){
-		int locator=Functions.newLocator(5, position, 9);
+		int locator=Functions.newLocator(6, position, numdif);
 		Functions.inputText(driver, numBoxList.get(locator), Chrgs);
 	}
 
@@ -488,14 +582,14 @@ public class BillEntryPage {
 	//public void tabOutFromTotalCharges(TotalCharges){
 	//	Functions.tabOut(numBoxList.get(0),TotalCharges);
 	//	}
-	
+
 	public void inputTextIntoDiag(String Diag, int position){
-		int locator=Functions.newLocator(10, position, 10);
+		int locator=Functions.newLocator(10, position, dif);
 		Functions.inputText(driver, silverInputBoxes.get(locator), Diag);
 	}
 
 	public void tabOutFromDiag(int position){
-		int locator=Functions.newLocator(10, position, 10);
+		int locator=Functions.newLocator(10, position, dif);
 		Functions.tabOut(silverInputBoxes.get(locator));
 	}
 
@@ -503,7 +597,7 @@ public class BillEntryPage {
 	//Line 1
 
 	public void inputTextIntoRevenueCd(String RevenueCd, int position){
-		int locator=Functions.newLocator(4, position, 10);
+		int locator=Functions.newLocator(4, position, dif);
 		Functions.inputText(driver, silverInputBoxes.get(locator),RevenueCd);
 	}
 	//
@@ -522,7 +616,7 @@ public class BillEntryPage {
 	//	}
 	//
 	public void inputTextIntoUB04Days(String Days, int position){     //***days    
-		int locator=Functions.newLocator(2, position, 9);
+		int locator=Functions.newLocator(3, position, numdif);
 		Functions.inputText(driver, numBoxList.get(locator), Days);
 	}
 
@@ -531,32 +625,37 @@ public class BillEntryPage {
 	//Line 1
 
 	public void inputTextIntoBillNDCCd(String BillNDCCd, int position){
-		int locator=Functions.newLocator(5, position, 10);
+		int locator=Functions.newLocator(5, position, dif);
 		Functions.inputText(driver, silverInputBoxes.get(locator), BillNDCCd);
 	}
 
 	public void inputTextIntoRewNDCCd(String RewNDCCd, int position){
-		int locator=Functions.newLocator(7, position, 10);
+		int locator=Functions.newLocator(7, position, dif);
 		Functions.inputText(driver, silverInputBoxes.get(locator), RewNDCCd);
 	}
 
 	public void inputTextIntoRXNo(String RXNo, int position){
-		int locator=Functions.newLocator(9, position, 10);
+		int locator=Functions.newLocator(9, position, dif);
 		Functions.inputText(driver, silverInputBoxes.get(locator), RXNo);
 	}
 
 	public void inputTextIntoQuantity(String Quantity, int position){
-		int locator=Functions.newLocator(2, position, 9);
+		int locator=Functions.newLocator(3, position, numdif);
 		Functions.inputText(driver, numBoxList.get(locator), Quantity);
 	}
 
-	public void inputTextIntoDaysupply(String Daysupply, int position){
-		int locator=Functions.newLocator(3, position, 9);
-		Functions.inputText(driver, numBoxList.get(locator), Daysupply);
+	public void inputTextIntoRXDaysSupply(String DaysSupply, int position) {
+		int locator=Functions.newLocator(4, position, numdif);
+		Functions.inputText(driver, numBoxList.get(locator), DaysSupply);
+
 	}
+//	public void inputTextIntoDaysupply(String Daysupply, int position){
+//		int locator=Functions.newLocator(4, position, numdif);
+//		Functions.inputText(driver, numBoxList.get(locator), Daysupply);
+//	}
 
 	public void inputTextIntoDAW(String DAW, int position){
-		int locator=Functions.newLocator(4, position, 9);
+		int locator=Functions.newLocator(5, position, numdif);
 		Functions.inputText(driver, numBoxList.get(locator), DAW);
 	}
 
@@ -571,11 +670,11 @@ public class BillEntryPage {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		  
+
 		catch (NoSuchElementException e1) {
 			return  false;
-			}
-			return false;
+		}
+		return false;
 	}
 
 	public boolean isDisplayedWarningIcon() {
@@ -586,11 +685,11 @@ public class BillEntryPage {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 
+
 		catch (NoSuchElementException e1) {
 			return  false;
-			}
-			return false;
+		}
+		return false;
 	}
 
 
@@ -612,12 +711,12 @@ public class BillEntryPage {
 		}
 		catch (NoSuchElementException e1) {
 			return  false;
-			}
-			return false;
-		 
+		}
+		return false;
+
 
 	}
-	
+
 	public boolean isDisplayedValidIconBillTxnID() {
 		try {
 			Thread.sleep(3000);
@@ -628,10 +727,10 @@ public class BillEntryPage {
 		}
 		catch (NoSuchElementException e1) {
 			return  false;
-			}
-			return false;
+		}
+		return false;
 	}
-	
+
 	public boolean isDisplayedValidIconZip() {
 		try {
 			Thread.sleep(3000);
@@ -642,9 +741,9 @@ public class BillEntryPage {
 		}
 		catch (NoSuchElementException e1) {
 			return  false;
-			}
-			return false;
-		 
+		}
+		return false;
+
 
 	}
 
@@ -658,7 +757,7 @@ public class BillEntryPage {
 			e.printStackTrace();
 		}
 		catch (NoSuchElementException e1) {
-		return  false;
+			return  false;
 		}
 		return false;
 	}
@@ -722,15 +821,15 @@ public class BillEntryPage {
 	}
 
 	public String getTextFromFeeScheduleDis(int position){
-		int locator=Functions.newLocator(6, position, 9);
+		int locator=Functions.newLocator(7, position, 9);
 		return Functions.getAttribute(numBoxList.get(locator),"value");
 	}
 
-	public void inputTextIntoRXDaysSupply(String Days, int position) {
-		int locator=Functions.newLocator(2, position, 9);
-		Functions.inputText(driver, numBoxList.get(locator), Days);
-
+	public String getTextFromMsgCodes(int position){
+		int locator=Functions.newLocator(11, position, dif);
+		return Functions.getAttribute(silverInputBoxes.get(locator),"value");
 	}
+
 
 	public void clickOnCreateLinks() {
 		WebElement firstCreateLink=createLinkButtons.get(0);
@@ -799,6 +898,13 @@ public class BillEntryPage {
 		}
 		return "";
 	}
+
+
+	//	public void tabOutFromDate(int position){   //Provider Bill Date
+	//		int locator=Functions.newLocator(0, position, 1);
+	//		Functions.pressTabKey(dateInputBoxes.get(locator));
+	//	}
+
 
 
 	//	public void clickOnNextButton(){

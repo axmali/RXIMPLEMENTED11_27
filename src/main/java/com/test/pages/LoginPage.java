@@ -10,10 +10,12 @@ import com.test.Utils.Functions;
 public class LoginPage {
 	WebDriver driver;
 
+		
 	@FindBy(id="txt_login_username") 
 	private WebElement usernameInputBox; 
 
-	@FindBy(id="txt_login_password")
+	
+	@FindBy(id="txt_login_password")     ////@FindBy(input[type=password][name='txt_login_password'])
 	private WebElement passwordInputBox; 
 
 	@FindBy(id="btn_login_submit")

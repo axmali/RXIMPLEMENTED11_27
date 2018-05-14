@@ -75,6 +75,7 @@ public class getData {
 		for( int j =0; j < colNum; j++){
 			System.out.println("j:"+j);
 			if(Sh.getRow(0).getCell(j).getStringCellValue().equalsIgnoreCase(header)){
+				//row.getCell(j).set
 				row.getCell(j).setCellValue(value);	
 				break;
 			}
